@@ -8,16 +8,19 @@ public class Agent_behavior_simple : MonoBehaviour
 	
 	private void Start() {
 		movement = new Vector3(1f * Time.deltaTime, 0f, 0f);
-		print("sldnfs");
 	}
-	// Update is called once per frame
+	
 	void Update()
     {
 		transform.Translate(movement);
 	}
 
-	private void OnTriggerEnter(Collider other) {
-		print("kjf");
+	private void OnTriggerStay(Collider other) {
+		if (other.name == "Pheromone") {
+			return;
+		}
+		
+		//TODO find path of least resistance ultiple collisions!
 		movement = -movement;
 	}
 
