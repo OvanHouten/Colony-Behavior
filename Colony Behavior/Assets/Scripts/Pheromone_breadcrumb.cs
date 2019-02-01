@@ -10,7 +10,7 @@ public class Pheromone_breadcrumb : MonoBehaviour
     void Start()
     {
 		value = 0;
-		print(value);
+		//print("crumb = " + value);
     }
 
     // Update is called once per frame
@@ -20,6 +20,6 @@ public class Pheromone_breadcrumb : MonoBehaviour
 
 	private void OnTriggerEnter(Collider other) {
 		value = value + 1;
-		print(value);
+		//print("crumb = " + value);
 	}
 }
