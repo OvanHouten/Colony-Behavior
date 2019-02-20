@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Agent_behavior_simple : MonoBehaviour
+public class Vibrating_Particles : MonoBehaviour
 {
 	float agent_size = 1.0f;
 	float personal_range = 3.0f;
