@@ -34,7 +34,7 @@ public class PheromoneHelper : MonoBehaviour {
 		cubes.Add(pheromone);
 		pheromone.transform.position = position;
 		pheromone.transform.parent = cubeContainer.transform;
-		pheromone.name = "Pheromone " + pheromoneCount;
+		pheromone.name = "p " + pheromoneCount;
 
 		pheromone.transform.localScale = new Vector3(size, size, size);
 

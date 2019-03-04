@@ -7,7 +7,7 @@ public class Vibrating_Particles : MonoBehaviour
 	float agent_size = 1.0f;
 	float personal_range = 3.0f;
 	float flock_range = 6.0f;
-	float stepsize = 0.01f;
+	float stepsize = 0.001f;
 	Vector3 movement;
 
 	private void Start() {
