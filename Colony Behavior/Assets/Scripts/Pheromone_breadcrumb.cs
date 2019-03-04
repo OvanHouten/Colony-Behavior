@@ -23,7 +23,6 @@ public class Pheromone_breadcrumb : MonoBehaviour
 	// Update is called once per frame
 	void Update() {
 		float a_value = (value / 100f);
-		//float rgb_value = 1 - a_value;
 		meshRenderer.material.SetColor("_Color", new Vector4(0.0f, 0.0f, 0.0f, a_value));
 
 		value -= evaporation_rate;
@@ -33,6 +32,10 @@ public class Pheromone_breadcrumb : MonoBehaviour
 	}
 
 	private void OnTriggerStay(Collider other) {
+		if (!other.name.Contains("Agent")) {
+			return;
+		}
+
 		meshRenderer.enabled = true;
 		value = value + drop_rate;
 
