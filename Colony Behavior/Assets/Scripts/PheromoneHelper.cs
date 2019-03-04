@@ -10,7 +10,11 @@ public class PheromoneHelper : MonoBehaviour {
 	private static List<GameObject> cubes;
 
 	public static GameObject MakePheromone(float x, float y, float z) {
-		return MakePheromone(x, y, z, 1f);
+		return MakePheromone(x, y, z, Color.red, 1);
+	}
+
+	public static GameObject MakePheromone(float x, float y, float z, Color color) {
+		return MakePheromone(x, y, z, color, 1);
 	}
 
 	public static GameObject MakePheromone(float x, float y, float z, float size) {
