@@ -7,7 +7,7 @@ public class Vibrating_Particles : MonoBehaviour
 	float agent_size = 1.0f;
 	float personal_range = 3.0f;
 	float flock_range = 6.0f;
-	float stepsize = 0.1f;
+	float stepsize = 0.01f;
 	Vector3 movement;
 
 	private void Start() {
@@ -21,17 +21,21 @@ public class Vibrating_Particles : MonoBehaviour
 		Collider[] AllColliders = Physics.OverlapSphere(agent_position, flock_range);
 		List<Collider> agents_list = new List<Collider>();
 		foreach (Collider c in AllColliders) {
-			if (c.name != "Pheromone" && c.name != name) {
+			if (!c.name.Contains("Pheromone") && c.name != name) {
 				agents_list.Add(c);
 			}
 		}
 
 		float distance;
+		float min_pheromones;
 		Vector3 new_position;
 		Vector3 new_direction;
+		Vector3 best_position;
 		
-		//drop pheromones
+		//drop pheromones (happens within Pheromone code through collisions)
 		new_position = agent_position;
+		best_position = new_position;
+		//min_pheromones = ; //value of pheromones at agent position
 		foreach (Collider other_agent in agents_list) {
 			//calculate distance between this.agent and other agent.
 			distance = Vector3.Distance(agent_position, other_agent.transform.position);
@@ -48,9 +52,9 @@ public class Vibrating_Particles : MonoBehaviour
 			}
 		}
 
-		//if (new_position is allowed) {}
-		transform.position = new_position;
-		//transform.Translate(movement);
+		//if (best_position is allowed) { //new position is in bounding box (handled through collision right now)
+			transform.position = new_position;
+		//}
 	}
 
 	//private void ondrawgizmos() {

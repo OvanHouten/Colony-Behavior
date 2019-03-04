@@ -7,24 +7,24 @@ public class Pheromone_breadcrumb : MonoBehaviour
 	MeshRenderer meshRenderer;
 	float value;
 	float evaporation_rate;
+	float drop_rate;
 
 	// Start is called before the first frame update
     void Start()
     {
 		value = 0f;
 		evaporation_rate = 0.1f;
+		drop_rate = 1;
 		meshRenderer = GetComponent<MeshRenderer>();
 		meshRenderer.material.SetColor("_Color", new Vector4(0.0f, 0.0f, 0.0f, 0.0f));
+		meshRenderer.enabled = false;
 	}
 
 	// Update is called once per frame
 	void Update() {
 		float a_value = (value / 100f);
-		float rgb_value = 1 - a_value;
-		print("rgb = " + rgb_value);
-		print("a = " + a_value);
+		//float rgb_value = 1 - a_value;
 		meshRenderer.material.SetColor("_Color", new Vector4(0.0f, 0.0f, 0.0f, a_value));
-		//meshRenderer.material.SetColor("_Color", new Vector4(rgb_value, rgb_value, rgb_value, a_value));
 
 		value -= evaporation_rate;
 		if (value < 0.0f) {
@@ -33,7 +33,8 @@ public class Pheromone_breadcrumb : MonoBehaviour
 	}
 
 	private void OnTriggerStay(Collider other) {
-		value = value + 1;
+		meshRenderer.enabled = true;
+		value = value + drop_rate;
 
 		if (value > 100.0f) {
 			value = 100.0f;
