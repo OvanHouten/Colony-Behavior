@@ -10,11 +10,7 @@ public class PheromoneHelper : MonoBehaviour {
 	private static List<GameObject> cubes;
 
 	public static GameObject MakePheromone(float x, float y, float z) {
-		return MakePheromone(x, y, z, Color.red, 1);
-	}
-
-	public static GameObject MakePheromone(float x, float y, float z, Color color) {
-		return MakePheromone(x, y, z, color, 1);
+		return MakePheromone(x, y, z, 1);
 	}
 
 	public static GameObject MakePheromone(float x, float y, float z, float size) {
@@ -38,7 +34,7 @@ public class PheromoneHelper : MonoBehaviour {
 		cubes.Add(pheromone);
 		pheromone.transform.position = position;
 		pheromone.transform.parent = cubeContainer.transform;
-		pheromone.name = "p " + pheromoneCount;
+		pheromone.name = "Pheromone " + pheromoneCount;
 
 		pheromone.transform.localScale = new Vector3(size, size, size);
 

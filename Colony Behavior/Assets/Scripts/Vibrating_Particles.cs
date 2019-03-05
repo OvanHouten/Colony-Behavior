@@ -2,36 +2,34 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Vibrating_Particles : MonoBehaviour
-{
+public class Vibrating_Particles : MonoBehaviour {
 	float agent_size = 1.0f;
 	float personal_range = 3.0f;
 	float flock_range = 6.0f;
-	float stepsize = 0.1f;
+	float stepsize = 0.15f;
+	float pheromone_level;
 	Vector3 movement;
-
-	private void Start() {
-		//movement = new Vector3(1f * Time.deltaTime, 0f, 0f);
-	}
 
 	private void Update() {
 		Vector3 agent_position = transform.position;
 
-		// Find other agents in range
+		// Find other agents whithin range
 		Collider[] AllColliders = Physics.OverlapSphere(agent_position, flock_range);
 		List<Collider> agents_list = new List<Collider>();
 		foreach (Collider c in AllColliders) {
-			if (c.name != "Pheromone" && c.name != name) {
+			if (c.name.Contains("Agent") && c.name != name) {
 				agents_list.Add(c);
 			}
 		}
 
 		float distance;
-		Vector3 new_position;
+		float min_pher = pheromone_level;
+		float new_pher_level = 0;
+		Vector3 new_position = agent_position;
 		Vector3 new_direction;
+		Vector3 best_position = agent_position;
 		
-		//drop pheromones
-		new_position = agent_position;
+		//drop pheromones happens through collision detection.
 		foreach (Collider other_agent in agents_list) {
 			//calculate distance between this.agent and other agent.
 			distance = Vector3.Distance(agent_position, other_agent.transform.position);
@@ -44,13 +42,24 @@ public class Vibrating_Particles : MonoBehaviour
 			// move closer to other agent
 			else if (distance < flock_range) {
 				new_direction = Vector3.Normalize(other_agent.transform.position - agent_position);
-				new_position = new_position + new_direction *stepsize;
+				new_position = new_position + new_direction * stepsize;
+			}
+
+			// move to the position with the highest pheromones
+			new_pher_level = other_agent.gameObject.GetComponent<Vibrating_Particles>().pheromone_level;
+			if (new_pher_level < min_pher) {
+				min_pher = new_pher_level;
+				best_position = new_position;
 			}
 		}
 
 		//if (new_position is allowed) {}
-		transform.position = new_position;
-		//transform.Translate(movement);
+		transform.position = best_position;
+		pheromone_level = 0f;
+	}
+
+	public void setPheromoneLevel(float value) {
+		pheromone_level += value;
 	}
 
 	//private void ondrawgizmos() {
