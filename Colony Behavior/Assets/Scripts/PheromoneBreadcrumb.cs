@@ -33,6 +33,9 @@ public class PheromoneBreadcrumb : MonoBehaviour
 	}
 
 	private void OnTriggerEnter(Collider other) {
+		if (!meshRenderer.enabled) {
+			StatisticManager.Instance.AddVisitedCell();
+		}
 		meshRenderer.enabled = true;
 	}
 

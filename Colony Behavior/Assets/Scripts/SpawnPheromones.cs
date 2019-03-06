@@ -2,8 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SpawnPheromones : MonoBehaviour
-{
+public class SpawnPheromones : MonoBehaviour {
 	private int bound_x;
 	private int bound_y;
 	private int bound_z;

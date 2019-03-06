@@ -3,7 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 
 public class PheromoneHelper : MonoBehaviour {
-
 	private static GameObject PheromonePrefab;
 	private static GameObject cubeContainer;
 	private static int pheromoneCount = 0;
