@@ -8,18 +8,18 @@ public class PheromoneHelper : MonoBehaviour {
 	private static int pheromoneCount = 0;
 	private static List<GameObject> cubes;
 
+	private static GameObject GetPheromonePrefab() {
+		if (PheromonePrefab == null)
+			PheromonePrefab = Resources.Load("Pheromone") as GameObject;
+		return PheromonePrefab;
+	}
+
 	public static GameObject MakePheromone(float x, float y, float z) {
 		return MakePheromone(x, y, z, 1);
 	}
 
 	public static GameObject MakePheromone(float x, float y, float z, float size) {
 		return MakePheromone(new Vector3(x, y, z), size);
-	}
-
-	private static GameObject GetPheromonePrefab() {
-		if (PheromonePrefab == null)
-			PheromonePrefab = Resources.Load("Pheromone") as GameObject;
-		return PheromonePrefab;
 	}
 
 	public static GameObject MakePheromone(Vector3 position, float size) {
