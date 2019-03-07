@@ -18,6 +18,10 @@ public class AgentHelper : MonoBehaviour {
 		return MakeAgent(new Vector3(x, y, z), size);
 	}
 
+	public static GameObject MakeAgent(Vector3 position) {
+		return MakeAgent(position, 1);
+	}
+
 	public static GameObject MakeAgent(Vector3 position, float size) {
 		agentCount++;
 		if (agentContainer == null) {
