@@ -8,10 +8,12 @@ public class SpawnAgents : MonoBehaviour {
 	float agent_size = 1;
 
 	void Start() {
-		print("SLEBBA");
-		AgentHelper.MakeAgent(0f, 0f, 0f, 1).SetActive(true);
+		Vector3 position;
+		Vector3 offset = new Vector3(0, 0, 0); // for if spawn shouldnt be in the middle. WARNING: DOES NOT CHECK IF AGENTS SPAWN OUT OF BOUNDS
+
 		for (int i = 0; i < numAgents; i++) {
-			AgentHelper.MakeAgent(spawnRadius * Random.insideUnitSphere, agent_size).SetActive(true);
+			position = (spawnRadius * Random.insideUnitSphere) + offset;
+			AgentHelper.MakeAgent(position, agent_size).SetActive(true);
 		}
     }
 
