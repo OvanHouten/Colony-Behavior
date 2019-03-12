@@ -11,6 +11,12 @@ public class Vibrating_Particles : MonoBehaviour {
 	float pheromone_level;
 	Vector3 movement;
 
+	private void Start() {
+		Rigidbody rbody = GetComponent<Rigidbody>();
+		rbody.isKinematic = false;
+		//rigidbody.constraints = RigidbodyConstraints.FreezeAll;
+	}
+
 	private void FixedUpdate() {
 		Vector3 agent_position = transform.position;
 
