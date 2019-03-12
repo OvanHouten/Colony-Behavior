@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -10,7 +11,7 @@ public class Vibrating_Particles : MonoBehaviour {
 	float pheromone_level;
 	Vector3 movement;
 
-	private void Update() {
+	private void FixedUpdate() {
 		Vector3 agent_position = transform.position;
 
 		// Find other agents whithin range
@@ -28,10 +29,10 @@ public class Vibrating_Particles : MonoBehaviour {
 		Vector3 new_position = agent_position;
 		Vector3 new_direction;
 		Vector3 best_position = agent_position;
-		
-		//drop pheromones happens through collision detection.
+
+		// dropping pheromones happens through collision detection.
 		foreach (Collider other_agent in agents_list) {
-			//calculate distance between this.agent and other agent.
+			// calculate distance between this.agent and other agent.
 			distance = Vector3.Distance(agent_position, other_agent.transform.position);
 
 			// move away from other agent
@@ -53,9 +54,31 @@ public class Vibrating_Particles : MonoBehaviour {
 			}
 		}
 
-		//if (new_position is allowed) {}
-		transform.position = best_position;
+		if (isAllowed(best_position)) {
+			transform.position = best_position;
+		}
 		pheromone_level = 0f;
+	}
+
+	private bool isAllowed(Vector3 pos) {
+		float radius = agent_size / 2;
+		Vector3 worldBounds = GameObject.Find("BoundingBox").transform.lossyScale / 2;
+
+		worldBounds.x = worldBounds.x - radius;
+		worldBounds.y = worldBounds.y - radius;
+		worldBounds.z = worldBounds.z - radius;
+
+		if (pos.x > worldBounds.x && pos.x < -worldBounds.x) {
+			return false;
+		}
+		if (pos.y > worldBounds.y && pos.y < -worldBounds.y) {
+			return false;
+		}
+		if (pos.z > worldBounds.z && pos.z < -worldBounds.z) {
+			return false;
+		}
+
+		return true;
 	}
 
 	public void setPheromoneLevel(float value) {

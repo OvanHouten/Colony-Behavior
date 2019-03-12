@@ -32,6 +32,7 @@ public class PheromoneBreadcrumb : MonoBehaviour
 		}
 	}
 
+	// Dont render when pheromone has not been active
 	private void OnTriggerEnter(Collider other) {
 		if (!meshRenderer.enabled) {
 			StatisticManager.Instance.AddVisitedCell();
@@ -39,6 +40,7 @@ public class PheromoneBreadcrumb : MonoBehaviour
 		meshRenderer.enabled = true;
 	}
 
+	// Update value of pheromone when in contact with agent
 	private void OnTriggerStay(Collider other) {
 		value = value + drop_rate;
 

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class SpawnAgents : MonoBehaviour {
-	int numAgents = 5;
+	int numAgents = 10;
 	int spawnRadius = 5;
 	float agent_size = 1;
 
@@ -21,5 +21,6 @@ public class SpawnAgents : MonoBehaviour {
 	void Update() {
 		//get agent list from agents helper
 		//for loop through list
+		// update size
 	}
 }
