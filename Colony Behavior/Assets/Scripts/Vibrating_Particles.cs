@@ -7,7 +7,7 @@ public class Vibrating_Particles : MonoBehaviour {
 	float agent_size = 1.0f;
 	float personal_range = 3.0f;
 	float flock_range = 6.0f;
-	float stepsize = 0.15f;
+	float stepsize = 0.1f;
 	float pheromone_level;
 	Vector3 movement;
 
@@ -53,7 +53,7 @@ public class Vibrating_Particles : MonoBehaviour {
 				best_position = new_position;
 			}
 		}
-
+		
 		if (isAllowed(best_position)) {
 			transform.position = best_position;
 		}
@@ -68,13 +68,13 @@ public class Vibrating_Particles : MonoBehaviour {
 		worldBounds.y = worldBounds.y - radius;
 		worldBounds.z = worldBounds.z - radius;
 
-		if (pos.x > worldBounds.x && pos.x < -worldBounds.x) {
+		if (pos.x > worldBounds.x || pos.x < -worldBounds.x) {
 			return false;
 		}
-		if (pos.y > worldBounds.y && pos.y < -worldBounds.y) {
+		if (pos.y > worldBounds.y || pos.y < -worldBounds.y) {
 			return false;
 		}
-		if (pos.z > worldBounds.z && pos.z < -worldBounds.z) {
+		if (pos.z > worldBounds.z || pos.z < -worldBounds.z) {
 			return false;
 		}
 

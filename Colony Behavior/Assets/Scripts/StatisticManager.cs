@@ -20,8 +20,8 @@ public class StatisticManager : MonoBehaviour {
 
     void Update() {
 		iterations++;
-		print("time" + iterations);
-		print("cells" + visited_cells);
+		//print("time" + iterations);
+		//print("cells" + visited_cells);
     }
 
 	public void AddVisitedCell() {
