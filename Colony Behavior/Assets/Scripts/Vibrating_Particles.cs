@@ -4,10 +4,10 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Vibrating_Particles : MonoBehaviour {
-	float agent_size = 1.0f;
-	float personal_range = 3.0f;
-	float flock_range = 6.0f;
-	float stepsize = 0.1f;
+	public static float agent_size = 1.0f;
+	public static float personal_range = 3.0f;
+	public static float flock_range = 6.0f;
+	public static float stepsize = 0.1f;
 	float pheromone_level;
 	Vector3 movement;
 
@@ -15,9 +15,9 @@ public class Vibrating_Particles : MonoBehaviour {
 		Vector3 agent_position = transform.position;
 
 		// Find other agents whithin range
-		Collider[] AllColliders = Physics.OverlapSphere(agent_position, flock_range);
+		Collider[] all_colliders = Physics.OverlapSphere(agent_position, flock_range);
 		List<Collider> agents_list = new List<Collider>();
-		foreach (Collider c in AllColliders) {
+		foreach (Collider c in all_colliders) {
 			if (c.name.Contains("Agent") && c.name != name) {
 				agents_list.Add(c);
 			}
@@ -54,42 +54,57 @@ public class Vibrating_Particles : MonoBehaviour {
 			}
 		}
 		
-		if (isAllowed(best_position)) {
+		if (IsAllowed(best_position)) {
 			transform.position = best_position;
 		}
 		pheromone_level = 0f;
 	}
 
-	private bool isAllowed(Vector3 pos) {
+	// control the agents so they dont go out of bounds
+	private bool IsAllowed(Vector3 pos) {
 		float radius = agent_size / 2;
-		Vector3 worldBounds = GameObject.Find("BoundingBox").transform.lossyScale / 2;
+		Vector3 world_bounds = GameObject.Find("BoundingBox").transform.lossyScale / 2;
 
-		worldBounds.x = worldBounds.x - radius;
-		worldBounds.y = worldBounds.y - radius;
-		worldBounds.z = worldBounds.z - radius;
+		world_bounds.x = world_bounds.x - radius;
+		world_bounds.y = world_bounds.y - radius;
+		world_bounds.z = world_bounds.z - radius;
 
-		if (pos.x > worldBounds.x || pos.x < -worldBounds.x) {
+		if (pos.x > world_bounds.x || pos.x < -world_bounds.x) {
 			return false;
 		}
-		if (pos.y > worldBounds.y || pos.y < -worldBounds.y) {
+		if (pos.y > world_bounds.y || pos.y < -world_bounds.y) {
 			return false;
 		}
-		if (pos.z > worldBounds.z || pos.z < -worldBounds.z) {
+		if (pos.z > world_bounds.z || pos.z < -world_bounds.z) {
 			return false;
 		}
 
 		return true;
 	}
 
-	public void setPheromoneLevel(float value) {
-		pheromone_level += value;
+	// Change size of agent through a slider
+	public void SetAgentSize(float new_size) {
+		agent_size = new_size;
+		// update size in rendering?
 	}
 
-	//private void ondrawgizmos() {
-	//	gizmos.color = color.red;
-	//	//use the same vars you use to draw your overlap sphere to draw your wire sphere.
-	//	gizmos.drawwiresphere(transform.position, flock_range);
-	//}
+	// Change range of personal radius through a slider
+	public void SetPersonalRange(float new_range) {
+		personal_range = new_range;
+	}
+
+	// Change range of flock radius through a slider
+	public void SetFlockRange(float new_range) {
+		flock_range = new_range;
+	}
+
+	// Change size of steps taken by agents every frame
+	public void SetStepSize(float new_stepsize) {
+		stepsize = new_stepsize;
+	}
+
+	// Set Pheromone level of the agents, used by pheromones to update the value of the agent
+	public void SetPheromoneLevel(float value) {
+		pheromone_level += value;
+	}
 }
-
-

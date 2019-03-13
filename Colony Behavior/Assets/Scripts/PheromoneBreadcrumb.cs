@@ -48,14 +48,6 @@ public class PheromoneBreadcrumb : MonoBehaviour
 			value = 100.0f;
 		}
 
-		other.gameObject.GetComponent<Vibrating_Particles>().setPheromoneLevel(value);
-	}
-
-	//Test function, remove later with button
-	public void AddPheromones() {
-		value += 10;
-		if (value > 100) {
-			value = 100;
-		}
+		other.gameObject.GetComponent<Vibrating_Particles>().SetPheromoneLevel(value);
 	}
 }
