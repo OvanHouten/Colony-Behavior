@@ -16,11 +16,4 @@ public class SpawnAgents : MonoBehaviour {
 			AgentHelper.MakeAgent(position, agent_size).SetActive(true);
 		}
     }
-
-	//Called when updating size
-	void Update() {
-		//get agent list from agents helper
-		//for loop through list
-		// update size
-	}
 }
