@@ -3,12 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-public class PheromoneBreadcrumb : MonoBehaviour
-{
+public class Pheromone : MonoBehaviour {
+	public static float evaporation_rate;
+	public static float drop_rate;
 	MeshRenderer meshRenderer;
 	float value;
-	float evaporation_rate;
-	float drop_rate;
 
 	// Start is called before the first frame update
     void Start()
@@ -49,5 +48,15 @@ public class PheromoneBreadcrumb : MonoBehaviour
 		}
 
 		other.gameObject.GetComponent<Vibrating_Particles>().SetPheromoneLevel(value);
+	}
+
+	// Change amount of evaporation per time unit
+	public void SetEvaporationRate(float new_evaporation_rate) {
+		evaporation_rate = new_evaporation_rate;
+	}
+
+	// change amount of pheromones dropped each time unit per agent
+	public void SetDropRate(float new_droprate) {
+		drop_rate = new_droprate;
 	}
 }
