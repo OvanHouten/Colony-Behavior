@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class SpawnAgents : MonoBehaviour {
-	int numAgents = 10;
+	int numAgents = 20;
 	int spawnRadius = 5;
 	float agent_size = 1;
 
