@@ -6,7 +6,7 @@ public class AgentHelper : MonoBehaviour {
 	private static GameObject agentPrefab;
 	private static GameObject agentContainer;
 	private static int agentCount = 0;
-	private static List<GameObject> agents;
+	public static List<GameObject> agents;
 
 	private static GameObject GetAgentPrefab() {
 		if (agentPrefab == null)

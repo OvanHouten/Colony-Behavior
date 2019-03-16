@@ -12,7 +12,7 @@ public class StatisticManager : MonoBehaviour {
 	private int visited_cells;
 	private int iterations;
 	private int total_pheromones;
-	private float percentage_visited;
+	private float covarage;
 
 	// We want a global statistic manager, and this is how we make sure there can be only one.
 	void Awake() {
@@ -34,11 +34,15 @@ public class StatisticManager : MonoBehaviour {
 	}
 
 	// Dump data in file every iteration
-    void Update() {
+    void FixedUpdate() {
 		iterations++;
-		percentage_visited = (visited_cells * 100f) / total_pheromones;
-		File.AppendAllText((path + filename), iterations + "\t" + percentage_visited + "\t\t" + visited_cells + "\n");
-    }
+		covarage = (visited_cells * 100f) / total_pheromones;
+		File.AppendAllText((path + filename), iterations + "\t" + covarage + "\t\t" + visited_cells + "\n");
+
+		if (covarage > 98f) {
+			Debug.Break();
+		}
+	}
 
 	public void AddVisitedCell() {
 		visited_cells++;

@@ -23,48 +23,42 @@ public class Vibrating_Particles : MonoBehaviour {
 
 	private void FixedUpdate() {
 		Vector3 agent_position = transform.position;
-
-		// Find other agents whithin range
-		Collider[] all_colliders = Physics.OverlapSphere(agent_position, flock_range);
-		List<Collider> agents_list = new List<Collider>();
-		foreach (Collider c in all_colliders) {
-			if (c.name.Contains("Agent") && c.name != name) {
-				agents_list.Add(c);
-			}
-		}
-
+		Vector3 new_position = agent_position;
+		Vector3 best_position = agent_position;
+		Vector3 new_direction;
 		float distance;
 		float min_pher = pheromone_level;
-		float new_pher_level = 0;
-		Vector3 new_position = agent_position;
-		Vector3 new_direction;
-		Vector3 best_position = agent_position;
+		float new_pher_level;
 
-		// dropping pheromones happens through collision detection.
-		foreach (Collider other_agent in agents_list) {
+		foreach (GameObject other_agent in AgentHelper.agents) {
 			// calculate distance between this.agent and other agent.
 			distance = Vector3.Distance(agent_position, other_agent.transform.position);
 
-			// move away from other agent
-			if (distance < personal_range) {
-				new_direction = Vector3.Normalize(agent_position - other_agent.transform.position);
-				new_position = new_position + new_direction * stepsize;
-			}
-			// move closer to other agent
-			else if (distance < flock_range) {
-				new_direction = Vector3.Normalize(other_agent.transform.position - agent_position);
-				new_position = new_position + new_direction * stepsize;
-			}
+			if (distance < flock_range) {
+				// move away from other agent
+				if (distance < personal_range) {
+					new_direction = Vector3.Normalize(agent_position - other_agent.transform.position);
+					new_position = new_position + new_direction * stepsize;
+				}
+				// move closer to other agent
+				else {
+					new_direction = Vector3.Normalize(other_agent.transform.position - agent_position);
+					new_position = new_position + new_direction * stepsize;
+				}
 
-			// move to the position with the highest pheromones
-			new_pher_level = other_agent.gameObject.GetComponent<Vibrating_Particles>().pheromone_level;
-			if (new_pher_level < min_pher) {
-				min_pher = new_pher_level;
-				best_position = new_position;
+				new_pher_level = other_agent.gameObject.GetComponent<Vibrating_Particles>().pheromone_level;
+				if (new_pher_level < min_pher) {
+					min_pher = new_pher_level;
+					best_position = new_position;
+				}
 			}
 		}
-		
+
 		if (IsAllowed(best_position)) {
+			// This might not be how it works in the paper, see if this makes a difference, (final step now equals stepsize, decreases warping)
+//			new_direction = Vector3.Normalize(best_position - agent_position);
+//			best_position = agent_position + new_direction * stepsize;
+
 			transform.position = best_position;
 		}
 		pheromone_level = 0f;

@@ -9,23 +9,22 @@ public class Pheromone : MonoBehaviour {
 	MeshRenderer meshRenderer;
 	float value;
 
-	// Start is called before the first frame update
-    void Start()
-    {
+	// Start is called before the first frame update, default settings from paper
+    void Start() {
 		value = 0f;
-		evaporation_rate = 0.1f;
-		drop_rate = 1f;
+		evaporation_rate = 0.3f;
+		drop_rate = 15f;
 		meshRenderer = GetComponent<MeshRenderer>();
 		meshRenderer.material.SetColor("_Color", new Vector4(0.0f, 0.0f, 0.0f, 0.0f));
 		meshRenderer.enabled = false;
 	}
 
 	// Update is called once per frame
-	void Update() {
+	void FixedUpdate() {
 		float a_value = (value / 100f);
 		meshRenderer.material.SetColor("_Color", new Vector4(0.0f, 0.0f, 0.0f, a_value));
 
-		value -= evaporation_rate;
+		value -= value * evaporation_rate;
 		if (value < 0.0f) {
 			value = 0.0f;
 		}
@@ -52,7 +51,7 @@ public class Pheromone : MonoBehaviour {
 
 	// Change amount of evaporation per time unit
 	public void SetEvaporationRate(float new_evaporation_rate) {
-		evaporation_rate = new_evaporation_rate;
+		evaporation_rate = new_evaporation_rate / 100;
 	}
 
 	// change amount of pheromones dropped each time unit per agent
