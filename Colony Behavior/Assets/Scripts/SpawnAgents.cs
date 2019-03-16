@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class SpawnAgents : MonoBehaviour {
-	int numAgents = 20;
+	int numAgents = 30;
 	int spawnRadius = 5;
-	float agent_size = 1;
+	float agent_size = 1.0f;
 
 	void Start() {
 		Vector3 position;

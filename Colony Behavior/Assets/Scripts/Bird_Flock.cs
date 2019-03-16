@@ -6,7 +6,7 @@ public class Bird_Flock : MonoBehaviour {
 	public static float agent_size = 1.0f;
 	public static float personal_range = 3.0f;
 	public static float flock_range = 6.0f;
-	public static float stepsize = 0.1f;
+	public static float stepsize = 1f;
 	public float confidence = 0; // to be calculated, starts at zero, is public so other agents can communicate it to eachother
 	float pheromone_level;
 	Vector3 movement;

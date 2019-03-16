@@ -4,12 +4,22 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Vibrating_Particles : MonoBehaviour {
-	public static float agent_size = 1.0f;
-	public static float personal_range = 3.0f;
-	public static float flock_range = 6.0f;
-	public static float stepsize = 0.1f;
+	public static float agent_size;
+	public static float personal_range_slider;
+	public static float personal_range;
+	public static float flock_range_slider;
+	public static float flock_range;
+	public static float stepsize;
 	float pheromone_level;
 	Vector3 movement;
+
+	// Default settings
+	private void Start() {
+		agent_size = 1.0f;
+		personal_range = agent_size + 5.0f;
+		flock_range = personal_range + 5.0f;
+		stepsize = 1.0f;
+	}
 
 	private void FixedUpdate() {
 		Vector3 agent_position = transform.position;
@@ -85,17 +95,21 @@ public class Vibrating_Particles : MonoBehaviour {
 	// Change size of agent through a slider
 	public void SetAgentSize(float new_size) {
 		agent_size = new_size;
-		// update size in rendering?
+		personal_range = agent_size + personal_range_slider;
+		flock_range = personal_range + flock_range_slider;
 	}
 
 	// Change range of personal radius through a slider
 	public void SetPersonalRange(float new_range) {
-		personal_range = new_range;
+		personal_range_slider = new_range;
+		personal_range = agent_size + personal_range_slider;
+		flock_range = personal_range + flock_range_slider;
 	}
 
 	// Change range of flock radius through a slider
 	public void SetFlockRange(float new_range) {
-		flock_range = new_range;
+		flock_range_slider = new_range;
+		flock_range = personal_range + flock_range_slider;
 	}
 
 	// Change size of steps taken by agents every frame

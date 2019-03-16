@@ -36,6 +36,7 @@ public class AgentHelper : MonoBehaviour {
 		agent.name = "Agent " + agentCount;
 
 		agent.transform.localScale = new Vector3(size, size, size);
+		agent.GetComponent<Vibrating_Particles>().SetAgentSize(size);
 
 		return agent;
 	}
