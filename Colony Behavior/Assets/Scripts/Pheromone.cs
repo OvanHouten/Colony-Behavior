@@ -20,8 +20,16 @@ public class Pheromone : MonoBehaviour {
 	}
 
 	// Update is called once per frame
-	void Update() {
-		float a_value = (value / 100f);
+	void FixedUpdate() {
+
+		float a_value;
+		if (value < 1f) {
+			a_value = 0.05f; // so you can still see a bit of the visited pheromones
+		}
+		else {
+			a_value = (value / 100f);
+		}
+
 		meshRenderer.material.SetColor("_Color", new Vector4(0.0f, 0.0f, 0.0f, a_value));
 
 		value -= value * evaporation_rate;
