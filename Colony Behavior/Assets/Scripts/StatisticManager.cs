@@ -10,7 +10,6 @@ public class StatisticManager : MonoBehaviour {
 	string filename;
 
 	private int visited_cells;
-	private int iterations;
 	private int total_pheromones;
 	private float covarage;
 
@@ -22,7 +21,6 @@ public class StatisticManager : MonoBehaviour {
 	// Start is called before the first frame update
 	void Start() {
 		visited_cells = 0;
-		iterations = 0;
 
 		path = Application.dataPath;
 		filename = "/output.txt";
@@ -35,9 +33,8 @@ public class StatisticManager : MonoBehaviour {
 
 	// Dump data in file every iteration
     void FixedUpdate() {
-		iterations++;
 		covarage = (visited_cells * 100f) / total_pheromones;
-		File.AppendAllText((path + filename), iterations + "\t" + covarage + "\t\t" + visited_cells + "\n");
+		File.AppendAllText((path + filename), Time.frameCount + "\t" + covarage + "\t\t" + visited_cells + "\n");
 
 		if (covarage > 98f) {
 			Debug.Break();

@@ -20,7 +20,7 @@ public class Pheromone : MonoBehaviour {
 	}
 
 	// Update is called once per frame
-	void FixedUpdate() {
+	void Update() {
 		float a_value = (value / 100f);
 		meshRenderer.material.SetColor("_Color", new Vector4(0.0f, 0.0f, 0.0f, a_value));
 
