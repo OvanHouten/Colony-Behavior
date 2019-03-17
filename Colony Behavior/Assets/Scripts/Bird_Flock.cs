@@ -2,15 +2,29 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+
+// UNFINISHED: It has not had the performance optimizations Vibrating Particles have, and confidence is being updated ate any point
+// in the algorithm, meaning it stays at 0 the whole time
 public class Bird_Flock : MonoBehaviour {
-	public static float agent_size = 1.0f;
-	public static float personal_range = 3.0f;
-	public static float flock_range = 6.0f;
-	public static float stepsize = 1f;
+	public static float agent_size;
+	public static float personal_range_slider;
+	public static float personal_range;
+	public static float flock_range_slider;
+	public static float flock_range;
+	public static float stepsize;
 	public float confidence = 0; // to be calculated, starts at zero, is public so other agents can communicate it to eachother
 	float pheromone_level;
 	Vector3 movement;
 
+	// Default settings Taken from the paper, this means its not optimized for 3D
+	private void Start() {
+		agent_size = 1.0f;
+		personal_range = agent_size + 5.0f;
+		flock_range = personal_range + 5.0f;
+		stepsize = 1.0f;
+	}
+
+	// Main update loop for agents using the Vibrating particle model
 	private void FixedUpdate() {
 		Vector3 agent_position = transform.position;
 
@@ -26,7 +40,7 @@ public class Bird_Flock : MonoBehaviour {
 		float distance;
 		Vector3 new_position = agent_position;
 		Vector3 new_direction;
-		Collider most_confident = this.GetComponent<Collider>(); // is most confident as itself at the start
+		Collider most_confident = this.GetComponent<Collider>(); // is most confident in itself at the start
 
 		// dropping pheromones happens through collision detection.
 		foreach (Collider other_agent in agents_list) {
@@ -46,21 +60,25 @@ public class Bird_Flock : MonoBehaviour {
 			}
 		}
 
+		// After we found the most confident agent (that isnt the agent self) we move closer to thsi agent
 		if (most_confident != this.GetComponent<Collider>()) {
 			new_direction = Vector3.Normalize(agent_position - most_confident.transform.position);
 			new_position = new_position + new_direction * stepsize;
 		}
 
+		// We want to make sure the agents dont move out of bounds, if this is the case, move the agent
 		if (IsAllowed(new_position)) {
 			transform.position = new_position;
+			// TODO
 			// build confidence based on pheromone levels at agent_position
 			// build up extra confidence for being able to move
 		}
 
+		// The pheromone level will be recalculated next frame
 		pheromone_level = 0f;
 	}
 
-	// control the agents so they dont go out of bounds
+	// Control the agents so they dont go out of bounds
 	private bool IsAllowed(Vector3 pos) {
 		float radius = agent_size / 2;
 		Vector3 world_bounds = GameObject.Find("BoundingBox").transform.lossyScale / 2;
@@ -85,17 +103,21 @@ public class Bird_Flock : MonoBehaviour {
 	// Change size of agent through a slider
 	public void SetAgentSize(float new_size) {
 		agent_size = new_size;
-		// update size in rendering?
+		personal_range = agent_size + personal_range_slider;
+		flock_range = personal_range + flock_range_slider;
 	}
 
 	// Change range of personal radius through a slider
 	public void SetPersonalRange(float new_range) {
-		personal_range = new_range;
+		personal_range_slider = new_range;
+		personal_range = agent_size + personal_range_slider;
+		flock_range = personal_range + flock_range_slider;
 	}
 
 	// Change range of flock radius through a slider
 	public void SetFlockRange(float new_range) {
-		flock_range = new_range;
+		flock_range_slider = new_range;
+		flock_range = personal_range + flock_range_slider;
 	}
 
 	// Change size of steps taken by agents every frame

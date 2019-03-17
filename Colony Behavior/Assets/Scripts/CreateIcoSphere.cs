@@ -3,7 +3,9 @@ using UnityEditor;
 using System.Collections;
 using System.Collections.Generic;
 
-//Code frome: http://wiki.unity3d.com/index.php/CreateIcoSphere
+// Code frome: http://wiki.unity3d.com/index.php/CreateIcoSphere
+// I used icospheres since they resemble spheres without using to many triangles, this is better for performance then the
+// built in spheres.
 public class CreateIcoSphere : ScriptableWizard {
 	// Not implemented
 	public enum AnchorPoint {

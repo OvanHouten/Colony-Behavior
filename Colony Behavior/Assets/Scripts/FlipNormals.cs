@@ -2,11 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FlipNormals : MonoBehaviour
-{
+// This script flips the normal vectors inside out of the bounding box cube, so you can look inside it from all angles
+public class FlipNormals : MonoBehaviour {
     // Start is called before the first frame update
-    void Start()
-    {
+    void Start() {
 		Mesh mesh = this.GetComponent<MeshFilter>().mesh;
 
 		Vector3[] normals = mesh.normals;

@@ -13,7 +13,7 @@ public class StatisticManager : MonoBehaviour {
 	private int total_pheromones;
 	private float covarage;
 
-	// We want a global statistic manager, and this is how we make sure there can be only one.
+	// We want a global statistic manager, with this we make sure there is only one instance
 	void Awake() {
 		m_Instance = this;
 	}
@@ -41,10 +41,12 @@ public class StatisticManager : MonoBehaviour {
 		}
 	}
 
+	// Used by pheromones when they are visted for the first time
 	public void AddVisitedCell() {
 		visited_cells++;
 	}
 
+	// Destroy singleton
 	void OnDestroy() {
 		m_Instance = null;
 	}

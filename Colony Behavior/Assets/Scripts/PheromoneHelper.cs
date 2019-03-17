@@ -8,6 +8,7 @@ public class PheromoneHelper : MonoBehaviour {
 	private static int pheromoneCount = 0;
 	private static List<GameObject> cubes;
 
+	// Get the prefab, so we can copy the same pheromone cube many times over.
 	private static GameObject GetPheromonePrefab() {
 		if (PheromonePrefab == null)
 			PheromonePrefab = Resources.Load("Pheromone") as GameObject;
@@ -22,6 +23,7 @@ public class PheromoneHelper : MonoBehaviour {
 		return MakePheromone(new Vector3(x, y, z), size);
 	}
 
+	// All MakePheromone functions boil down to this. Pretty self explainatory.
 	public static GameObject MakePheromone(Vector3 position, float size) {
 		pheromoneCount++;
 		if (cubeContainer == null) {

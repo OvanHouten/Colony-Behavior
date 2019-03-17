@@ -16,15 +16,14 @@ public class Pheromone : MonoBehaviour {
 		drop_rate = 15f;
 		meshRenderer = GetComponent<MeshRenderer>();
 		meshRenderer.material.SetColor("_Color", new Vector4(0.0f, 0.0f, 0.0f, 0.0f));
-		meshRenderer.enabled = false;
+		meshRenderer.enabled = false; // When a pheromone has not been visited yet by an agent, we dont render it.
 	}
 
 	// Update is called once per frame
 	void FixedUpdate() {
-
 		float a_value;
 		if (value < 1f) {
-			a_value = 0.05f; // so you can still see a bit of the visited pheromones
+			a_value = 0.05f; // This is so you can still see a bit of the visited pheromones
 		}
 		else {
 			a_value = (value / 100f);
@@ -38,7 +37,7 @@ public class Pheromone : MonoBehaviour {
 		}
 	}
 
-	// Dont render when pheromone has not been active
+	// Only render the pheromone when it has been rendered for the first time
 	private void OnTriggerEnter(Collider other) {
 		if (!meshRenderer.enabled) {
 			StatisticManager.Instance.AddVisitedCell();

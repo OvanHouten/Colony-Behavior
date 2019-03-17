@@ -1,8 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+// This is a simple cam script made public here: https://forum.unity.com/threads/fly-cam-simple-cam-script.67042/
 public class FlyCamera : MonoBehaviour {
-
 	/*
     Writen by Windexglow 11-13-10.  Use it, edit it, steal it I don't care.  
     Converted to C# 27-02-13 - no credit wanted.
@@ -10,7 +10,8 @@ public class FlyCamera : MonoBehaviour {
     Made simple to use (drag and drop, done) for regular keyboard layout  
     wasd : basic movement
     shift : Makes camera accelerate
-    space : Moves camera on X and Z axis only.  So camera doesn't gain any height*/
+    space : Moves camera on X and Z axis only.  So camera doesn't gain any height
+	*/
 
 
 	float mainSpeed = 50.0f; //regular speed

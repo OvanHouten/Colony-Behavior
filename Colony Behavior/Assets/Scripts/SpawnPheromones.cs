@@ -9,6 +9,8 @@ public class SpawnPheromones : MonoBehaviour {
 
     // Start is called before the first frame update
     void Start() {
+		// Bounds are calculated through the scale of the world.
+		// This has not been made foolproof and therefor should be an even integer, otherwise it might break stuff
 		bound_x = (int)(transform.lossyScale.x / 2);
 		bound_y = (int)(transform.lossyScale.y / 2);
 		bound_z = (int)(transform.lossyScale.z / 2);

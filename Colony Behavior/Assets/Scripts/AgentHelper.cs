@@ -8,6 +8,7 @@ public class AgentHelper : MonoBehaviour {
 	private static int agentCount = 0;
 	public static List<GameObject> agents;
 
+	// Get the prefab, so we can copy the same pheromone cube many times over.
 	private static GameObject GetAgentPrefab() {
 		if (agentPrefab == null)
 			agentPrefab = Resources.Load("AI_Agent") as GameObject;
@@ -22,6 +23,7 @@ public class AgentHelper : MonoBehaviour {
 		return MakeAgent(position, 1);
 	}
 
+	// All MakePheromone functions boil down to this. Pretty self explainatory.
 	public static GameObject MakeAgent(Vector3 position, float size) {
 		agentCount++;
 		if (agentContainer == null) {

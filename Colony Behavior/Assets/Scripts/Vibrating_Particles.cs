@@ -13,7 +13,7 @@ public class Vibrating_Particles : MonoBehaviour {
 	float pheromone_level;
 	Vector3 movement;
 
-	// Default settings
+	// Default settings Taken from the paper, this means its not optimized for 3D
 	private void Start() {
 		agent_size = 1.0f;
 		personal_range = agent_size + 5.0f;
@@ -21,6 +21,7 @@ public class Vibrating_Particles : MonoBehaviour {
 		stepsize = 1.0f;
 	}
 
+	// Main update loop for agents using the Vibrating particle model
 	private void FixedUpdate() {
 		Vector3 agent_position = transform.position;
 		Vector3 new_position = agent_position;
@@ -30,6 +31,7 @@ public class Vibrating_Particles : MonoBehaviour {
 		float min_pher = pheromone_level;
 		float new_pher_level;
 
+		// We loop through all agents, but ignore the agents outside flock range
 		foreach (GameObject other_agent in AgentHelper.agents) {
 			// calculate distance between this.agent and other agent.
 			distance = Vector3.Distance(agent_position, other_agent.transform.position);
@@ -46,6 +48,7 @@ public class Vibrating_Particles : MonoBehaviour {
 					new_position = new_position + new_direction * stepsize;
 				}
 
+				// The best position is wherever the pheromones are lowest, this is where the agent will end up moving.
 				new_pher_level = other_agent.gameObject.GetComponent<Vibrating_Particles>().pheromone_level;
 				if (new_pher_level < min_pher) {
 					min_pher = new_pher_level;
@@ -54,17 +57,15 @@ public class Vibrating_Particles : MonoBehaviour {
 			}
 		}
 
+		// We want to make sure the agents dont move out of bounds, if this is the case, move the agent
 		if (IsAllowed(best_position)) {
-			// This might not be how it works in the paper, see if this makes a difference, (final step now equals stepsize, decreases warping)
-//			new_direction = Vector3.Normalize(best_position - agent_position);
-//			best_position = agent_position + new_direction * stepsize;
-
 			transform.position = best_position;
 		}
+		// The pheromone level will be recalculated next frame
 		pheromone_level = 0f;
 	}
 
-	// control the agents so they dont go out of bounds
+	// Control the agents so they dont go out of bounds
 	private bool IsAllowed(Vector3 pos) {
 		float radius = agent_size / 2;
 		Vector3 world_bounds = GameObject.Find("BoundingBox").transform.lossyScale / 2;
